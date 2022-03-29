@@ -1,5 +1,9 @@
 # Northcoders News API
 
+## Set-up
+
+You will need to add the .env.development and .env.test files to make sure you have access to the necessary environment variables. Add "PGDATABASE=<database_name_here>, you can find the name of the database in /db/setup.sql and you replace <database_name_here> to the name of the database
+
 ## Background
 
 We will be building an API for the purpose of accessing application data programmatically. The intention here is to mimic the building of a real world backend service (such as reddit) which should provide this information to the front end architecture.
