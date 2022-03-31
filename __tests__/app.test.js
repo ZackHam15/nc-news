@@ -16,24 +16,14 @@ describe("GET /api/topics", () => {
       .get("/api/topics")
       .expect(200)
       .then((res) => {
-        expect(typeof res.body).toBe("object");
-      });
-  });
-  test("200: returns topics as correct format", () => {
-    return request(app)
-      .get("/api/topics")
-      .expect(200)
-      .then((res) => {
-        res.body.results.forEach((topic) => {
-          expect(topic).toMatchObject({
+        res.body.topic.forEach((Topics) => {
+          expect(Topics).toMatchObject({
             slug: expect.any(String),
             description: expect.any(String),
           });
+          expect(Array.isArray([res.body.topic])).toBe(true);
         });
       });
-  });
-  test("404: returns an error if there's an error", () => {
-    return request(app).get("/api/topic").expect(404);
   });
 });
 
@@ -43,15 +33,7 @@ describe("GET /api/articles:article_id", () => {
       .get("/api/articles/1")
       .expect(200)
       .then((res) => {
-        expect(typeof res.body).toBe("object");
-      });
-  });
-  test("200: returns articles as correct format", () => {
-    return request(app)
-      .get("/api/articles/1")
-      .expect(200)
-      .then((res) => {
-        res.body.data.forEach((article) => {
+        res.body.articles.forEach((article) => {
           expect(article).toMatchObject({
             author: expect.any(String),
             title: expect.any(String),
@@ -62,6 +44,7 @@ describe("GET /api/articles:article_id", () => {
             votes: expect.any(Number),
           });
         });
+        expect(Array.isArray([res.body.articles])).toBe(true);
       });
   });
   test("200: returns articles as correct format", () => {
@@ -69,12 +52,12 @@ describe("GET /api/articles:article_id", () => {
       .get("/api/articles/2")
       .expect(200)
       .then((res) => {
-        res.body.data.forEach((article) => {
+        res.body.articles.forEach((article) => {
           expect(article).toMatchObject({
             author: expect.any(String),
             title: expect.any(String),
             article_id: 2,
-            body: expect.any(String),
+            body: expect.any(String), // this is testing for different id numbers and seeing if they still match with data
             topic: expect.any(String),
             created_at: expect.anything(),
             votes: expect.any(Number),
@@ -82,8 +65,8 @@ describe("GET /api/articles:article_id", () => {
         });
       });
   });
-  test("404: returns an error if there's an error", () => {
-    return request(app).get("/api/article/1").expect(404);
+  test("404: returns an error if not found in database", () => {
+    return request(app).get("/api/article/999").expect(404);
   });
 });
 
@@ -93,22 +76,12 @@ describe("GET /api/users", () => {
       .get("/api/users")
       .expect(200)
       .then((res) => {
-        expect(typeof res.body).toBe("object");
-      });
-  });
-  test("200: returns only usernames from the users' table", () => {
-    return request(app)
-      .get("/api/users")
-      .expect(200)
-      .then((res) => {
-        res.body.data.forEach((allUsers) => {
-          expect(allUsers).toMatchObject({
+        expect(Array.isArray([res.body.users])).toBe(true);
+        res.body.users.forEach((user) => {
+          expect(user).toMatchObject({
             username: expect.any(String),
           });
         });
       });
-  });
-  test("404: returns an error if there's an error", () => {
-    return request(app).get("/api/user").expect(404);
   });
 });

@@ -1,28 +1,28 @@
 const {
   selectTopics,
-  selectArticleId,
+  selectArticleById,
   updateArticleId,
   selectUsers,
-  selectArticleComment,
+  selectArticleComments,
 } = require("../models/app.model");
 
 exports.getTopics = (req, res) => {
   selectTopics().then((results) => {
-    res.status(200).send({ results });
+    res.status(200).send({ topic: results });
   });
 };
 
 exports.getArticleId = (req, res) => {
   const { article_id } = req.params;
-  selectArticleId(article_id).then((data) => {
-    res.status(200).send({ data });
+  selectArticleById(article_id).then((data) => {
+    res.status(200).send({ articles: data });
   });
 };
 
-exports.getArticleComment = (req, res) => {
+exports.getArticleComments = (req, res) => {
   const { article_id } = req.params;
-  selectArticleComment(article_id).then((data) => {
-    res.status(200).send({ data });
+  selectArticleComments(article_id).then((data) => {
+    res.status(200).send({ articles: data });
   });
 };
 
@@ -40,6 +40,6 @@ exports.getArticleComment = (req, res) => {
 
 exports.getUsers = (req, res) => {
   selectUsers().then((data) => {
-    res.status(200).send({ data });
+    res.status(200).send({ users: data });
   });
 };

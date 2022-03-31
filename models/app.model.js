@@ -1,39 +1,26 @@
 const db = require("../db/connection");
 
 exports.selectTopics = () => {
-  return db
-    .query("SELECT slug, description FROM topics;")
-    .then((res) => {
-      return res.rows;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  return db.query("SELECT slug, description FROM topics;").then((res) => {
+    return res.rows;
+  });
 };
 
-exports.selectArticleId = (article_id) => {
+exports.selectArticleById = (article_id) => {
   return db
     .query(
-      "SELECT author, title, article_id, body, topic, created_at, votes FROM articles WHERE article_id = $1;",
+      "SELECT author, title, article_id, body, topic, created_at, votes FROM articles WHERE article_id = $1;", // not used * to order them in a specific way
       [article_id]
     )
     .then((res) => {
       return res.rows;
-    })
-    .catch((err) => {
-      console.log(er);
     });
 };
 
-exports.selectArticleComment = (article_id) => {
-  return db
-    .query("SELECT comment_count FROM", [article_id])
-    .then((res) => {
-      return res.rows;
-    })
-    .catch((err) => {
-      console.log(er);
-    });
+exports.selectArticleComments = (article_id) => {
+  return db.query("SELECT comment_count FROM;", [article_id]).then((res) => {
+    return res.rows;
+  });
 };
 
 // exports.updateArticleId = (article_id, inc_votes) => {
@@ -48,12 +35,7 @@ exports.selectArticleComment = (article_id) => {
 // };
 
 exports.selectUsers = () => {
-  return db
-    .query("SELECT username FROM users")
-    .then((res) => {
-      return res.rows;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  return db.query("SELECT username FROM users;").then((res) => {
+    return res.rows;
+  });
 };
