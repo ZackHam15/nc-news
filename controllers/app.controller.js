@@ -14,9 +14,13 @@ exports.getTopics = (req, res) => {
 
 exports.getArticleId = (req, res) => {
   const { article_id } = req.params;
-  selectArticleById(article_id).then((data) => {
-    res.status(200).send({ articles: data });
-  });
+  if (article_id === undefined) {
+    res.status(404).send("Not found!");
+  } else {
+    selectArticleById(article_id).then((data) => {
+      res.status(200).send({ articles: data });
+    });
+  }
 };
 
 exports.getArticleComments = (req, res) => {

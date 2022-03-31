@@ -3,10 +3,9 @@ const db = require("../db/connection");
 const request = require("supertest");
 const testData = require("../db/data/test-data");
 const seed = require("../db/seeds/seed");
-const res = require("express/lib/response");
 
 afterAll(() => {
-  if (db.end) db.end();
+  db.end();
 });
 beforeEach(() => seed(testData));
 
@@ -66,7 +65,7 @@ describe("GET /api/articles:article_id", () => {
       });
   });
   test("404: returns an error if not found in database", () => {
-    return request(app).get("/api/article/999").expect(404);
+    return request(app).get("/api/article/999").send(undefined).expect(404);
   });
 });
 
